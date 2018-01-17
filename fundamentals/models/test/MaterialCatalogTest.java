@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test;
 
 import core.fundamentals.models.Book;
 import core.fundamentals.models.Material;
-import core.fundamentals.models.MaterialCatalog;
+import core.fundamentals.models.MaterialCatalogMemoryVersion;
 import core.fundamentals.models.MaterialNotFoundException;
 
 public class MaterialCatalogTest {
-  private MaterialCatalog bc;
+  private MaterialCatalogMemoryVersion bc;
   private Book book1; 
 
   public MaterialCatalogTest() {
-    bc = new MaterialCatalog();
+    bc = new MaterialCatalogMemoryVersion();
     book1 = new Book("1", "Learning Java", "", "", "", 0);
     bc.addMaterial(book1);
     System.out.println("Constructor being run");

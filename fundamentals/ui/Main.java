@@ -9,12 +9,12 @@ import core.fundamentals.models.DVD;
 import core.fundamentals.models.Loan;
 import core.fundamentals.models.LoanAlreadyExistsException;
 import core.fundamentals.models.LoansRegistry;
-import core.fundamentals.models.MaterialCatalog;
+import core.fundamentals.models.MaterialCatalogMemoryVersion;
 import core.fundamentals.utilities.GenderType;
 
 public class Main {
   public static void main(String[] args) { 
-    MaterialCatalog materialCatalog = new MaterialCatalog();
+    MaterialCatalogMemoryVersion materialCatalog = new MaterialCatalogMemoryVersion();
 
     Book book1 = new Book("1001", "An introduction to Java", "Math Greencroft", "12345", "New York", 400);
     Book book2 = new Book("223X", "Better Java", "Joe Le Blanc", "23456", "Booklyn", 200);
@@ -39,7 +39,7 @@ public class Main {
     UI ui = new UI();
     ui.printHeader();
 
-    ui.printMaterialCatalog(materialCatalog.getMap());
+    ui.printMaterialCatalog(materialCatalog.getMaterialMap());
     /*
     try {
       Book foundBook = materialCatalog.findBook("Better");

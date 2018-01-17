@@ -2,21 +2,24 @@ package core.fundamentals.models;
 
 import java.util.TreeMap;
 
-public class MaterialCatalog {
+public class MaterialCatalogMemoryVersion implements MaterialCatalogInterface{
   private TreeMap<String, Material> materialMap;
 
-  public MaterialCatalog() {
+  public MaterialCatalogMemoryVersion() {
     materialMap = new TreeMap<>();
   }
-
+  
+  @Override
   public void addMaterial(Material newMaterial) {
     materialMap.put(newMaterial.getID(), newMaterial);
   }
 
-  public TreeMap<String, Material> getMap() {
+  @Override
+  public TreeMap<String, Material> getMaterialMap() {
     return this.materialMap;
   }
 
+  @Override
   public Material findMaterial(String title) throws MaterialNotFoundException{
   		title = title.trim();
   		for (Material nextMaterial : materialMap.values()) {
@@ -28,6 +31,7 @@ public class MaterialCatalog {
     throw new MaterialNotFoundException();
   }
   
+  @Override
   public int getNumberOfMaterials() {
   		return materialMap.size();
   }
