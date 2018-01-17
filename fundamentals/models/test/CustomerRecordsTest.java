@@ -18,9 +18,9 @@ class CustomerRecordsTest {
         "sandra@math.com", 3, GenderType.FEMALE);
     records.add(newCustomer);
   }
-
-	@Test
-	public void testAddCustomer() {
+  
+  @Test
+  public void testAddCustomer() {
     Customer newCustomer = new Customer("Mr", "Math", "Greencroft", "1 High Street", "12345", 
         "math@math.com", 1, GenderType.MALE);
 
