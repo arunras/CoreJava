@@ -40,9 +40,9 @@ public class ImprovingArrays {
 
     System.out.println("\nHashMap");    
     HashMap <String, Book> myHashMap = new HashMap<>();
-    Book book1 = new Book(1, "first book", "", "", "", 100);
-    Book book2 = new Book(2, "second book", "", "", "", 100);
-    Book book3 = new Book(3, "third book", "", "", "", 100);
+    Book book1 = new Book("1", "first book", "", "", "", 100);
+    Book book2 = new Book("2", "second book", "", "", "", 100);
+    Book book3 = new Book("3", "third book", "", "", "", 100);
     myHashMap.put(book1.getTitle(), book1);
     myHashMap.put(book2.getTitle(), book2);
     myHashMap.put(book3.getTitle(), book3);

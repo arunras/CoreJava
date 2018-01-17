@@ -1,29 +1,35 @@
 package core.fundamentals.models;
 
-public class BookCatalog {
-  private Book[] bookArray = new Book[10];
-  private int nextPosition = 0;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
-  public Book[] getBookArray() {
-    return bookArray;
+public class BookCatalog {
+	private TreeMap<String, Book> bookMap;
+
+	public BookCatalog() {
+		bookMap = new TreeMap<>();
+	}
+  public TreeMap<String, Book> getBookMap() {
+    return bookMap;
   }
 
   public int getNumberOfBooks() {
-    return nextPosition;
+    return bookMap.size();
   }
 
   public void addBook(Book newBook) {
-    bookArray[nextPosition] = newBook;
-    nextPosition++;
+  		bookMap.put(newBook.getID(), newBook);
   }
 
   public Book findBook(String title) throws BookNotFoundException{
   		title = title.trim();
-    for (int i = 0; i < nextPosition; i++) {
-      if (bookArray[i].getTitle().equalsIgnoreCase(title)) {
-        return bookArray[i];
-      }
-    } 
+  		for (Book nextBook : bookMap.values()) {
+  			if (nextBook.getTitle().equalsIgnoreCase(title)) {
+  				return nextBook;
+  			}
+  		}
+  		
     throw new BookNotFoundException();
   }
 }

@@ -1,12 +1,12 @@
 package core.fundamentals.models;
 
 public abstract class Material {
-  private int id;
+  private String id;
   private String title;
   private String branch;
   private Customer borrower;
 
-  public Material(int id, String title, String branch) {
+  public Material(String id, String title, String branch) {
     this.id = id;
     this.title = title;
     this.branch = branch;
@@ -16,7 +16,7 @@ public abstract class Material {
   public abstract int getLoanPeriod();
 
 
-  public int getID() {
+  public String getID() {
     return id;
   }
   public String getTitle() {
