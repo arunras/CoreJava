@@ -3,8 +3,8 @@ package core.fundamentals.ui;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.SQLException;
 
 public class DatabaseConnectionTesting {
@@ -20,7 +20,7 @@ public class DatabaseConnectionTesting {
         try (PreparedStatement stm = conn.prepareStatement(sql)) {
           stm.setString(1, title);
           stm.setInt(2, id);
-          int results = stm.executeUpdate(sql); 
+          int results = stm.executeUpdate(); 
           System.out.println("Records amended: " + results);
         }
       } 

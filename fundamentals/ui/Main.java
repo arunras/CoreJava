@@ -9,15 +9,15 @@ import core.fundamentals.models.DVD;
 import core.fundamentals.models.Loan;
 import core.fundamentals.models.LoanAlreadyExistsException;
 import core.fundamentals.models.LoansRegistry;
-import core.fundamentals.models.MaterialCatalogDatabaseVersion;
+import core.fundamentals.models.Material;
+import core.fundamentals.models.MaterialCatalogDB;
 import core.fundamentals.models.MaterialCatalogInterface;
-import core.fundamentals.models.MaterialCatalogMemoryVersion;
+import core.fundamentals.models.MaterialNotFoundException;
 import core.fundamentals.utilities.GenderType;
 
 public class Main {
   public static void main(String[] args) { 
-  		MaterialCatalogInterface mci = new MaterialCatalogDatabaseVersion();
-    MaterialCatalogMemoryVersion materialCatalog = new MaterialCatalogMemoryVersion();
+    MaterialCatalogInterface materialCatalog = new MaterialCatalogDB();
 
     Book book1 = new Book("1001", "An introduction to Java", "Math Greencroft", "12345", "New York", 400);
     Book book2 = new Book("223X", "Better Java", "Joe Le Blanc", "23456", "Booklyn", 200);
@@ -30,14 +30,21 @@ public class Main {
     //System.out.println(dvd1.getTitle());
     //book1.relocate("NYC");
 
-    materialCatalog.addMaterial(book1);
-    materialCatalog.addMaterial(book2);
-    materialCatalog.addMaterial(book3);
-    materialCatalog.addMaterial(book4);
-    materialCatalog.addMaterial(book5);
-
-    materialCatalog.addMaterial(dvd1);
-    materialCatalog.addMaterial(dvd2);
+//    materialCatalog.addMaterial(book1);
+//    materialCatalog.addMaterial(book2);
+//    materialCatalog.addMaterial(book3);
+//    materialCatalog.addMaterial(book4);
+//    materialCatalog.addMaterial(book5);
+//    materialCatalog.addMaterial(dvd1);
+//    materialCatalog.addMaterial(dvd2);
+  
+    System.out.println("There are " + materialCatalog.getNumberOfMaterials() + " items in the library");
+    try {
+      Material foundMaterial = materialCatalog.findMaterial("Java");
+      System.out.println(foundMaterial);
+    } catch (MaterialNotFoundException e) {
+      System.out.println("No matching items found");
+    }
 
     UI ui = new UI();
     ui.printHeader();

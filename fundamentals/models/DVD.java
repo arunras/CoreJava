@@ -18,6 +18,22 @@ public class DVD extends Material {
     licensed = true;
   }
 
+  public boolean getLicensed() {
+    return licensed;
+  }
+
+  public int getRunningTime() {
+    return runningTime;
+  }
+
+  public String getCatalogNumber() {
+    return catalogNo;
+  }
+
+  public int getLoanPeriod() {
+    return 7;
+  }
+
   @Override
   public boolean lend(Customer customer) {
     if (licensed) {
@@ -25,10 +41,6 @@ public class DVD extends Material {
     } else {
       return false;
     }
-  }
-
-  public int getLoanPeriod() {
-    return 7;
   }
   
   @Override

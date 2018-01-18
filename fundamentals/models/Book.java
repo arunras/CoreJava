@@ -21,6 +21,9 @@ public class Book extends Material {
     return isbn;
   }
 
+  public int getNumberOfPages() {
+    return noOfPages;
+  }
   public void sendForRepair() {
     System.out.println("Book has been sent to repair");
   }
