@@ -17,8 +17,8 @@ public class MaterialCatalogDB implements MaterialCatalogInterface {
       throw new RuntimeException(e);
     }
   }
-	@Override
-	public void addMaterial(Material newMaterial) {
+  @Override
+  public void addMaterial(Material newMaterial) {
     Connection conn = null;
     PreparedStatement stm = null;
     try {
@@ -56,10 +56,10 @@ public class MaterialCatalogDB implements MaterialCatalogInterface {
       System.out.println("Something went wrong");
       System.out.println(e);
     }
-	}
+  }
 
-	@Override
-	public int getNumberOfMaterials() {
+  @Override
+  public int getNumberOfMaterials() {
     try {
       String sql = "SELECT count(id) FROM materials";
       try (Connection conn = DriverManager.getConnection("jdbc:derby://localhost/library")) {
@@ -73,10 +73,10 @@ public class MaterialCatalogDB implements MaterialCatalogInterface {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
-	}
+  }
 
-	@Override
-	public Material findMaterial(String title) throws MaterialNotFoundException {
+  @Override
+  public Material findMaterial(String title) throws MaterialNotFoundException {
     try {
       String sql = "SELECT * FROM materials WHERE title like '%" + title + "%'"; 
       try (Connection conn = DriverManager.getConnection("jdbc:derby://localhost/library")) {
@@ -102,10 +102,10 @@ public class MaterialCatalogDB implements MaterialCatalogInterface {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
-	}
+  }
 
-	@Override
-	public Map<String, Material> getMaterialMap() {
+  @Override
+  public Map<String, Material> getMaterialMap() {
     try {
       String sql = "SELECT * FROM materials"; 
       Map<String, Material> allMaterials = new LinkedHashMap<>();
@@ -129,5 +129,5 @@ public class MaterialCatalogDB implements MaterialCatalogInterface {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
-	}
+  }
 }
