@@ -9,11 +9,14 @@ import core.fundamentals.models.DVD;
 import core.fundamentals.models.Loan;
 import core.fundamentals.models.LoanAlreadyExistsException;
 import core.fundamentals.models.LoansRegistry;
+import core.fundamentals.models.MaterialCatalogDatabaseVersion;
+import core.fundamentals.models.MaterialCatalogInterface;
 import core.fundamentals.models.MaterialCatalogMemoryVersion;
 import core.fundamentals.utilities.GenderType;
 
 public class Main {
   public static void main(String[] args) { 
+  		MaterialCatalogInterface mci = new MaterialCatalogDatabaseVersion();
     MaterialCatalogMemoryVersion materialCatalog = new MaterialCatalogMemoryVersion();
 
     Book book1 = new Book("1001", "An introduction to Java", "Math Greencroft", "12345", "New York", 400);
