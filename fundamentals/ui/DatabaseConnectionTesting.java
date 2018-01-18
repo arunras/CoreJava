@@ -18,8 +18,8 @@ public class DatabaseConnectionTesting {
       Class.forName("org.apache.derby.jdbc.ClientDriver");
       try (Connection conn = DriverManager.getConnection("jdbc:derby://localhost/library")) {
         try (PreparedStatement stm = conn.prepareStatement(sql)) {
-        		stm.setString(1, title);
-        		stm.setInt(2, id);
+          stm.setString(1, title);
+          stm.setInt(2, id);
           int results = stm.executeUpdate(sql); 
           System.out.println("Records amended: " + results);
         }
