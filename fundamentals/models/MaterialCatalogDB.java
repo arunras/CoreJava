@@ -136,7 +136,7 @@ public class MaterialCatalogDB implements MaterialCatalogInterface {
   } 
 
   @Override
-	public List<Material> findItemsSoundingLike(String title) {
+  public List<Material> findItemsSoundingLike(String title) {
     Map<String, Material> allItems = getMaterialMap();
     List<Material> results = new ArrayList<>();
     Metaphone mph = new Metaphone();
@@ -147,5 +147,5 @@ public class MaterialCatalogDB implements MaterialCatalogInterface {
       }
     } 
     return results;
-	}
+  }
 }
