@@ -2,6 +2,7 @@ package core.fundamentals.ui;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.List;
 
 import core.fundamentals.models.Book;
 import core.fundamentals.models.Customer;
@@ -105,5 +106,9 @@ public class Main {
     firstLoan.endLoan();
     System.out.println(registry.isBookOnLoan(book1.getID()));
 
+    List<Material> foundItems = materialCatalog.findItemsSoundingLike("Bitter Java");
+    for (Material nextMaterial : foundItems) {
+      System.out.println(nextMaterial.getTitle());
+    }
   }
 }

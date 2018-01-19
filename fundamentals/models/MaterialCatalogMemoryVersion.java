@@ -1,5 +1,6 @@
 package core.fundamentals.models;
 
+import java.util.List;
 import java.util.TreeMap;
 
 public class MaterialCatalogMemoryVersion implements MaterialCatalogInterface{
@@ -35,4 +36,10 @@ public class MaterialCatalogMemoryVersion implements MaterialCatalogInterface{
   public int getNumberOfMaterials() {
   		return materialMap.size();
   }
+
+	@Override
+	public List<Material> findItemsSoundingLike(String title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
