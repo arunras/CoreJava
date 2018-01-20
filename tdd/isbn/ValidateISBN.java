@@ -15,14 +15,14 @@ public class ValidateISBN {
     throw new NumberFormatException("ISBN numbers must be 10 or 13 digits long");
   }
 
-  private boolean isthisavalidshortisbn(string isbn) {
+  private boolean isThisAValidShortISBN(String isbn) {
     int total = 0;
-    for (int i = 0; i < short_isbn_length; i++) {
-      if (!character.isdigit(isbn.charat(i))) {
-        if (i == 9 && isbn.charat(i) == 'x') {
+    for (int i = 0; i < SHORT_ISBN_LENGTH; i++) {
+      if (!Character.isDigit(isbn.charAt(i))) {
+        if (i == 9 && isbn.charAt(i) == 'X') {
           total += 10;
         } else {
-          throw new numberformatexception("isbn can only contains numberic digits");
+          throw new NumberFormatException("isbn can only contains numberic digits");
         }
       } else {
         total += Character.getNumericValue(isbn.charAt(i)) * (SHORT_ISBN_LENGTH - i); 
