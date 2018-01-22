@@ -1,6 +1,15 @@
 package core.jat.sortingObjects;
 
+import java.util.Comparator;
+
 public class Book implements Comparable<Book>{
+	public static class ReverseTitleComparator implements Comparator<Book> {
+	  @Override
+	  public int compare(Book arg0, Book arg1) {
+	    return -(arg0.getTitle().compareTo(arg1.getTitle()));
+	  }
+	}
+	
   private int id;
   private String title;
   private String author;

@@ -1,6 +1,7 @@
 package core.jat.sortingObjects;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -19,7 +20,12 @@ public class Main {
 		books.add(new Book(10,"The Catcher in the Rye","J. D. Salinger"));
 		books.add(new Book(11,"The Hobbit","A. A. Milne"));
 
-    Collections.sort(books, new ReverseTitleComparator());
+    Collections.sort(books, new Comparator<Book>() {
+    		@Override
+    		public int compare(Book o1, Book o2) {
+    			return -(o1.getId() - o2.getId());
+    		}
+    });
 
     for (Book nextBook : books) {
       System.out.println(nextBook);
