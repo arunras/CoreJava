@@ -24,6 +24,13 @@ public class Main {
 
     for (Customer nextCustomer: customers) {
       System.out.println(nextCustomer.getAddress());
-    }
+    } 
+  
+    StringWorker<String, Integer> sw = new StringWorker<String, Integer>("Hello", 134);
+    System.out.println(sw.toString());    
+    StringWorker<String, String> sw2 = new StringWorker<String, String>("Hello", "World");
+    System.out.println(sw2.toString());    
+
+    System.out.print(StringWorker.getString(customer1, "Hello"));
   }
 }
