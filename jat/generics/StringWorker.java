@@ -17,7 +17,7 @@ public class StringWorker<T, U> {
     return "StringWorker : " + o1.toString() + " : " + o2.toString();
   }
   
-  public static <A> String getString2(A o1, A o2) {
+  public <T1> String getString2(T1 o1, T1 o2) {
     return "StringWorker : " + o1.toString() + " : " + o2.toString();
   }
 

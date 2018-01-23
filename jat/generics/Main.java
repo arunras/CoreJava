@@ -8,7 +8,7 @@ public class Main {
   public static void main(String[] args) {
     List<Customer> customers = new ArrayList<>();
 
-    Customer customer1 = new Customer(1, "Simon Brown", "10 East Stree");
+    ustomer customer1 = new Customer(1, "Simon Brown", "10 East Stree");
     Customer customer2 = new Customer(2, "Jean White", "16 North Road");
     Customer customer3 = new Customer(1, "Alison Green", "9 South Gargens");
 
