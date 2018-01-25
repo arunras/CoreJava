@@ -1,8 +1,54 @@
 package core.jat.threads;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 public class Main {
   public static void main(String[] args) {
-    threadProcessFlow();  
+    lockCondition();
+  }
+
+  public static void lockCondition() {
+    // From 23. Avoiding Deadlocks
+    CustomerList customerList = new CustomerList();
+    Thread removeCustomers = new Thread(new RemoveCustomerTask(customerList));
+    removeCustomers.start();
+    System.out.println("Started Thread to remove customers");
+
+    for (int i = 0; i < 5; i++) {
+      Thread addCustomers = new Thread(new AddCustomerTask(customerList, i*100));
+      addCustomers.start();
+      System.out.println("Started Thread to add customers");
+    }
+  }
+
+  public static void threadPool() {
+    System.out.print("Starting");
+    NumbersTaskPool task = new NumbersTaskPool();
+
+    ExecutorService pool =  Executors.newFixedThreadPool(2);
+    Future<Double> result = pool.submit(task);
+
+    while (!result.isDone()) {
+      System.out.println("still waiting");
+      try {
+        Thread.sleep(500);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    
+    try {
+    System.out.println(result.get());
+    } catch (InterruptedException e) {
+
+    } catch (ExecutionException e) {
+
+    }
+    System.out.println("Finished");
+
   }
 
   public static void threadProcessFlow() {
