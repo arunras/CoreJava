@@ -8,7 +8,7 @@ public class CustomerList {
 
   public void addToList(Customer customer) {
     synchronized (this) {
-      while (customers.size() > 100) {
+      while (customers.size()  > 100) {
         try {
           wait();
         } catch (InterruptedException e) {
