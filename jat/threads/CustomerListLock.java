@@ -6,11 +6,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.Condition;
 
-public class CustomerList {
+public class CustomerListLock {
   private List<Customer> customers = new ArrayList<>();
-  private customersLock = new ReentrantLock();
-  private customersAvailable = customersLock.newCondition();
-  private listHasSpace = customersLock.newCondition();
+  private Lock customersLock = new ReentrantLock();
+  private Condition customersAvailable = customersLock.newCondition();
+  private Condition listHasSpace = customersLock.newCondition();
 
   public void addToList(Customer customer) {
     customersLock.lock();
