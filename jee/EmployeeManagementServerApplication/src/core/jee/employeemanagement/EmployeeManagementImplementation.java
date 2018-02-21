@@ -3,6 +3,8 @@ package core.jee.employeemanagement;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import core.jee.employeemanagement.dataaccess.EmployeeDataAccess;
@@ -28,4 +30,9 @@ public class EmployeeManagementImplementation implements EmployeeManagementServi
   public List<Employee> searchBySurname(String surname) {
     return dao.findBySurname(surname);
   }
+	
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	public double dummyInMemoryMethod() {
+		return 109.293778;
+	}
 }
