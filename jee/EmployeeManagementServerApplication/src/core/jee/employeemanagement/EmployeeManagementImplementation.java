@@ -2,6 +2,8 @@ package core.jee.employeemanagement;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -16,9 +18,25 @@ public class EmployeeManagementImplementation implements EmployeeManagementServi
 	@Inject
 	private EmployeeDataAccess dao;
 	
+	@Inject
+	private ExternalPayrollSystem payrollSystem;
+	
+	@Resource
+	private SessionContext ctx;
+	
 	@Override
-  public void registerEmployee(Employee employee) {
+  public void registerEmployee(Employee employee) throws ServiceUnavailableException {
   		dao.insert(employee);
+  		payrollSystem.enrollEmployee(employee);
+  		
+  		/*
+  		try {
+  			payrollSystem.enrollEmployee(employee);
+  		} catch (ServiceUnavailableException e) {
+  			ctx.setRollbackOnly();
+  			throw e;
+  		}
+  		*/
   }
  
 	@Override

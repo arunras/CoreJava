@@ -20,20 +20,26 @@ public class Main {
 		Context jndi = new InitialContext(jndiProperties);
 		EmployeeManagementService service = (EmployeeManagementService) jndi.lookup("EmployeeManagementServerApplication/EmployeeManagementImplementation!core.jee.employeemanagement.EmployeeManagementService");
 		
-		
+		/*
 		Employee emp1 = new Employee("Sophie", "Green", "Artist", 1700);
 		Employee emp2 = new Employee("David", "Brown", "Dancer", 1800);
 		Employee emp3 = new Employee("Ronald", "Smith", "Conductor", 1900);
 		Employee emp4 = new Employee("Eric", "Jones", "Pianist", 2000);
 		
-		/*
 		service.registerEmployee(emp1);
 		service.registerEmployee(emp2);
 		service.registerEmployee(emp3);
 		service.registerEmployee(emp4);
 		*/
 		
-		List<Employee> employees = service.searchBySurname("Smith");
+		Employee emp1 = new Employee("Bora", "Persons", "Engineer", 3000);
+		try {
+			service.registerEmployee(emp1);
+		} catch (Exception e) {
+			System.out.println("Something went wrong!");
+		}
+		
+		List<Employee> employees = service.getAllEmployees();
 		for (Employee employee : employees) {
 			System.out.println(employee);
 		}
