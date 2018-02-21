@@ -7,6 +7,8 @@ import javax.persistence.Id;
 public class Employee implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	private static final long serialVersionUID = 1L;
   private String firstName;
   private String surname;
   private String jobRole;

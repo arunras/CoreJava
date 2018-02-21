@@ -9,10 +9,10 @@ import core.jee.employeemanagement.domain.Employee;
 @Local
 public interface EmployeeDataAccess {
 
-	void insert(Employee newEmployee);
+	public abstract void insert(Employee newEmployee);
 
-	List<Employee> findAll();
+	public abstract List<Employee> findAll();
 
-	List<Employee> findBySurname(String surname);
+	public abstract List<Employee> findBySurname(String surname);
 
 }

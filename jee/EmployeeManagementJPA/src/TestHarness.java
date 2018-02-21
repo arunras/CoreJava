@@ -17,7 +17,8 @@ public class TestHarness {
 		tx.begin();
 		
 		//Employee employee1 = new Employee("Jamese", "Smith", "Engineer", 1000);
-		//em.persist(employee1);
+	  //em.persist(employee1);
+		
 		Query q = em.createQuery("select employee from Employee employee");
 		List<Employee> results = q.getResultList();
 		for (Employee employee : results) {
