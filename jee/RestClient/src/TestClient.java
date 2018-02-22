@@ -16,8 +16,11 @@ public class TestClient {
 		Invocation invocation = target.request().buildGet();
 		Response response = invocation.invoke();
 		*/
-		Response response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees/7")
+		Response response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees/123")
 				.request("application/JSON").buildGet().invoke();
+		System.out.println(response.getHeaders());
+		System.out.println(response.getStatus());
+		
 		
 		System.out.println(response.readEntity(String.class));
 		response.close();
@@ -27,18 +30,24 @@ public class TestClient {
 		james.setSurname("Green1");
 		james.setJobRole("Author");
 		james.setSalary(10000);
-		Entity jamesEntity = Entity.entity(james, "application/XML");
+		
+		Entity jamesEntity = Entity.entity(james, "application/JSON");
+		
 		response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees")
 				.request().buildPost(jamesEntity).invoke();
-		System.out.println(response.readEntity(Employee.class).getId());
-		response.close();
-		
-		
-		response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees")
-				.request().buildGet().invoke();
-		List<Employee> employees = response.readEntity(new GenericType<List<Employee>>(){});
-		for (Employee e : employees) {
-			System.out.println(e);
+		System.out.println("Creating new employee returnd status code of " + response.getStatus());
+		if (response.getStatus() == 201) {
+			System.out.println(response.getHeaders().toString());
+			System.out.println(response.readEntity(String.class));
 		}
+		response.close();
+//		
+//		
+//		response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees")
+//				.request().buildGet().invoke();
+//		List<Employee> employees = response.readEntity(new GenericType<List<Employee>>(){});
+//		for (Employee e : employees) {
+//			System.out.println(e);
+//		}
 	}
 }

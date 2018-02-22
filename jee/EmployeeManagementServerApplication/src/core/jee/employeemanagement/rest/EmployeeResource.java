@@ -1,5 +1,7 @@
 package core.jee.employeemanagement.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -12,9 +14,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
 
 import core.jee.employeemanagement.EmployeeManagementServiceLocal;
 import core.jee.employeemanagement.ServiceUnavailableException;
+import core.jee.employeemanagement.dataaccess.EmployeeNotFoundException;
 import core.jee.employeemanagement.domain.Employee;
 
 @Stateless
@@ -32,21 +36,29 @@ public class EmployeeResource {
 	@GET
 	@Produces({"application/JSON", "application/XML"})
 	@Path("{employeeNo}")
-	public Employee findEmployeeById(@PathParam("employeeNo") int id, @Context HttpHeaders headers) {
+	public Response findEmployeeById(@PathParam("employeeNo") int id, @Context HttpHeaders headers) {
 		System.out.println("HEADERS : " + headers.getRequestHeaders());
-		return service.getById(id);
+		try {
+			Employee result = service.getById(id);
+			return Response.ok(result).build();
+		} catch (EmployeeNotFoundException e) {
+			return Response.status(404).build();
+		}
 	}
 	
 	@POST
 	@Produces({"application/JSON", "application/XML"})
 	@Consumes("application/JSON")
-	public Employee createEmployee(Employee employee) {
+	public Response createEmployee(Employee employee) {
 		try {
 			service.registerEmployee(employee);
+			URI uri = null;
+			try {
+				uri = new URI("/employees/104");
+			} catch (URISyntaxException e) {}
+			return Response.created(uri).build();
 		} catch (ServiceUnavailableException e) {
-			// TODO: fix this later
-			e.printStackTrace();
+			return Response.status(504).build();
 		}
-		return employee;
 	}
 }

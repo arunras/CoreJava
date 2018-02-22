@@ -10,6 +10,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import core.jee.employeemanagement.dataaccess.EmployeeDataAccess;
+import core.jee.employeemanagement.dataaccess.EmployeeNotFoundException;
 import core.jee.employeemanagement.domain.Employee;
 
 @Stateless
@@ -54,7 +55,7 @@ public class EmployeeManagementImplementation implements EmployeeManagementServi
 	}
 
 	@Override
-	public Employee getById(int id) {
+	public Employee getById(int id) throws EmployeeNotFoundException {
 		return dao.findById(id);
 	}
 }

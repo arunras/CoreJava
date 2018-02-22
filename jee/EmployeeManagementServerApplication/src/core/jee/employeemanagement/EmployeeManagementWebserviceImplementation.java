@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jws.WebService;
 
+import core.jee.employeemanagement.dataaccess.EmployeeNotFoundException;
 import core.jee.employeemanagement.domain.Employee;
 
 @Stateless
@@ -14,7 +15,7 @@ public class EmployeeManagementWebserviceImplementation {
 	@Inject
 	private EmployeeManagementServiceLocal service;
 	
-	public Employee getEmployeeById(int id) {
+	public Employee getEmployeeById(int id) throws EmployeeNotFoundException {
 		return service.getById(id);
 	}
 	
