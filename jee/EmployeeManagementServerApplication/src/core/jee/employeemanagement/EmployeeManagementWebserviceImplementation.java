@@ -10,7 +10,7 @@ import core.jee.employeemanagement.domain.Employee;
 
 @Stateless
 @WebService(name="EmployeeManagementWebService")
-public class EmployeeManagementWevserviceImplementation {
+public class EmployeeManagementWebserviceImplementation {
 	@Inject
 	private EmployeeManagementServiceLocal service;
 	
@@ -20,5 +20,9 @@ public class EmployeeManagementWevserviceImplementation {
 	
 	public List<Employee> getAllEmployees() {
 		return service.getAllEmployees();
+	}
+	
+	public void registerNewEmployee(Employee employee) throws ServiceUnavailableException {
+		service.registerEmployee(employee);
 	}
 }
