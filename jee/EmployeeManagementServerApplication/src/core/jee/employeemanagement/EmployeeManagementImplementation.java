@@ -13,8 +13,7 @@ import core.jee.employeemanagement.dataaccess.EmployeeDataAccess;
 import core.jee.employeemanagement.domain.Employee;
 
 @Stateless
-public class EmployeeManagementImplementation implements EmployeeManagementService{
-  //@TestingDao
+public class EmployeeManagementImplementation implements EmployeeManagementService, EmployeeManagementServiceLocal {
 	@Inject
 	private EmployeeDataAccess dao;
 	
@@ -52,5 +51,10 @@ public class EmployeeManagementImplementation implements EmployeeManagementServi
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public double dummyInMemoryMethod() {
 		return 109.293778;
+	}
+
+	@Override
+	public Employee getById(int id) {
+		return dao.findById(id);
 	}
 }
