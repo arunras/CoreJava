@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Employee {
 	private int id;
 	private String firstName;
-	private String jobRolel;
+	private String jobRole;
 	private int salary;
 	private String surname;
 	
@@ -20,11 +20,11 @@ public class Employee {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public String getJobRolel() {
-		return jobRolel;
+	public String getJobRole() {
+		return jobRole;
 	}
-	public void setJobRolel(String jobRolel) {
-		this.jobRolel = jobRolel;
+	public void setJobRole(String jobRolel) {
+		this.jobRole = jobRolel;
 	}
 	public int getSalary() {
 		return salary;

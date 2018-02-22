@@ -17,16 +17,15 @@ public class TestClient {
 		Response response = invocation.invoke();
 		*/
 		Response response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees/7")
-				.request().buildGet().invoke();
+				.request("application/JSON").buildGet().invoke();
 		
-		Employee employee = response.readEntity(Employee.class);
-		System.out.println(employee.toString());
+		System.out.println(response.readEntity(String.class));
 		response.close();
 		
 		Employee james = new Employee();
 		james.setFirstName("James");
 		james.setSurname("Green1");
-		james.setJobRolel("Author");
+		james.setJobRole("Author");
 		james.setSalary(10000);
 		Entity jamesEntity = Entity.entity(james, "application/XML");
 		response = client.target("http://localhost:8080/EmployeeManagement/webservice/employees")
