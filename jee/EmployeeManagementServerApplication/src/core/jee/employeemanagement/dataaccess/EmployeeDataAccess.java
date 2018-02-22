@@ -17,4 +17,6 @@ public interface EmployeeDataAccess {
 	
 	public abstract Employee findById(int id) throws EmployeeNotFoundException;
 
+	public abstract List<Employee> getAllEmployeesWhereIdBetween(int firstId, int secondId);
+
 }

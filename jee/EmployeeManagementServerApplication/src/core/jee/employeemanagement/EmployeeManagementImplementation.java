@@ -58,4 +58,9 @@ public class EmployeeManagementImplementation implements EmployeeManagementServi
 	public Employee getById(int id) throws EmployeeNotFoundException {
 		return dao.findById(id);
 	}
+
+	@Override
+	public List<Employee> getAllEmployeesWhereIdBetween(int firstId, int secondId) {
+		return dao.getAllEmployeesWhereIdBetween(firstId, secondId);
+	}
 }

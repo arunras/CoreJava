@@ -28,7 +28,6 @@ public class EmployeeDataAccessProductionVersion implements EmployeeDataAccess {
 
 	@Override
 	public List<Employee> findAll() {
-		
 		Query q = em.createQuery("select employee from Employee employee");
 		List<Employee> employees = q.getResultList();
 		return employees;
@@ -50,6 +49,15 @@ public class EmployeeDataAccessProductionVersion implements EmployeeDataAccess {
 		} catch (NoResultException e) {
 			throw new EmployeeNotFoundException();
 		}
+	}
+
+	@Override
+	public List<Employee> getAllEmployeesWhereIdBetween(int firstId, int secondId) {
+		Query q = em.createQuery("select employee from Employee employee where employee.id >= :first and employee.id <= :last");
+		q.setParameter("first", firstId);
+		q.setParameter("last", secondId);
+		List<Employee> employees = q.getResultList();
+		return employees;
 	}
 
 }

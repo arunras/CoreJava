@@ -41,4 +41,10 @@ public class EmployeeDataAccessTestingVersion implements EmployeeDataAccess {
 		return null;
 	}
 
+	@Override
+	public List<Employee> getAllEmployeesWhereIdBetween(int firstId, int secondId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

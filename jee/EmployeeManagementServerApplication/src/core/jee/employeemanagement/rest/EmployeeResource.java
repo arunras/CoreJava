@@ -7,12 +7,15 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
@@ -28,9 +31,18 @@ public class EmployeeResource {
 	private EmployeeManagementServiceLocal service;
 	
 	@GET
-	@Produces("application/JSON")
-	public List<Employee> getAllEmployees() {
-		return service.getAllEmployees();
+	@Produces({"application/JSON"})
+	public Response getAllEmployeesWhereIdBetween(@DefaultValue("0") @QueryParam("firstId") Integer firstId, @QueryParam("secondId") Integer secondId) {
+		if (firstId == 0 && secondId == null) {
+			//GenericEntity<List<Employee>> employees = new GenericEntity<List<Employee>>(service.getAllEmployees()) {};
+			return Response.ok(service.getAllEmployees()).build();
+		}
+		
+		if (firstId != null && secondId != null) {
+			return Response.ok(service.getAllEmployeesWhereIdBetween(firstId, secondId)).build();
+		}
+		
+		return Response.status(404).build();
 	}
 	
 	@GET
