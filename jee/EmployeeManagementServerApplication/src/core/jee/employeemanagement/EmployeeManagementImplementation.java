@@ -63,4 +63,14 @@ public class EmployeeManagementImplementation implements EmployeeManagementServi
 	public List<Employee> getAllEmployeesWhereIdBetween(int firstId, int secondId) {
 		return dao.getAllEmployeesWhereIdBetween(firstId, secondId);
 	}
+	
+	@Override
+	public void updateEmployee(int id, String jobRole, int salary) throws EmployeeNotFoundException {
+		dao.updateEmployee(id, jobRole, salary);
+	}
+	
+	@Override
+	public void deleteEmployee(int id) throws EmployeeNotFoundException {
+		dao.deleteEmployee(id);
+	}
 }

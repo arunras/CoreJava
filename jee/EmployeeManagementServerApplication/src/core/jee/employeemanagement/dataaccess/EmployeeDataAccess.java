@@ -19,4 +19,8 @@ public interface EmployeeDataAccess {
 
 	public abstract List<Employee> getAllEmployeesWhereIdBetween(int firstId, int secondId);
 
+	void updateEmployee(int id, String jobRole, int salary) throws EmployeeNotFoundException;
+
+	void deleteEmployee(int id) throws EmployeeNotFoundException;
+
 }

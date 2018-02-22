@@ -7,9 +7,11 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -73,4 +75,39 @@ public class EmployeeResource {
 			return Response.status(504).build();
 		}
 	}
+	
+	@DELETE
+	@Path("{employeeNo}")
+	public Response deleteEmployee(@PathParam("employeeNo") int id) {
+		try {
+			service.deleteEmployee(id);
+			return Response.status(204).build();
+		} catch (EmployeeNotFoundException e) {
+			return Response.status(404).build();
+		}
+	}
+	
+	@PUT
+	@Path("{employeeNo}")
+	@Produces({"application/JSON", "application/XML"})
+	@Consumes("application/JSON")
+	public Response updateEmployee(@PathParam("employeeNo") int id, Employee e) {
+		try {
+			service.updateEmployee(id, e.getJobRole(), e.getSalary());
+			return Response.ok(service.getById(id)).build();
+		} catch (EmployeeNotFoundException e1) {
+			return Response.status(404).build();
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
