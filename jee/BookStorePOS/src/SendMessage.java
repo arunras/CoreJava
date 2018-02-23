@@ -4,6 +4,7 @@ import java.util.Properties;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
+import javax.jms.MapMessage;
 import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
@@ -34,7 +35,11 @@ public class SendMessage {
 			Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
 			MessageProducer messageProducer = session.createProducer(queue);
 			
-			TextMessage message = session.createTextMessage("Hello World. The time is now " + new Date());
+      MapMessage message = session.createMapMessage();
+      message.setInt("sku", 10296);
+      message.setString("title", "Mastering Messaging");
+      message.setDouble("price", 10.99);
+      message.setLong("date", new Date().getTime());
 			
 			messageProducer.send(message);
 			
