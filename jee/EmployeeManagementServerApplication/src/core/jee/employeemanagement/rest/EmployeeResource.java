@@ -19,7 +19,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Link;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import core.jee.employeemanagement.EmployeeManagementServiceLocal;
 import core.jee.employeemanagement.ServiceUnavailableException;
@@ -31,6 +33,9 @@ import core.jee.employeemanagement.domain.Employee;
 public class EmployeeResource {
 	@Inject
 	private EmployeeManagementServiceLocal service;
+	
+	@Context
+	private UriInfo uriInfo;
 	
 	@GET
 	@Produces({"application/JSON"})
@@ -54,7 +59,12 @@ public class EmployeeResource {
 		System.out.println("HEADERS : " + headers.getRequestHeaders());
 		try {
 			Employee result = service.getById(id);
-			return Response.ok(result).build();
+			
+			Link selfLink = Link.fromUri(uriInfo.getAbsolutePath()).rel("self").type("get").build();
+			Link updateLink = Link.fromUri(uriInfo.getAbsolutePath()).rel("update").type("put").build();
+			Link deleteLink = Link.fromUri(uriInfo.getAbsolutePath()).rel("delete").type("delete").build();
+			
+			return Response.ok(result).links(selfLink, updateLink, deleteLink).build();
 		} catch (EmployeeNotFoundException e) {
 			return Response.status(404).build();
 		}
@@ -68,7 +78,7 @@ public class EmployeeResource {
 			service.registerEmployee(employee);
 			URI uri = null;
 			try {
-				uri = new URI("/employees/104");
+				uri = new URI(uriInfo.getAbsolutePath() + "/" + employee.getId());
 			} catch (URISyntaxException e) {}
 			return Response.created(uri).build();
 		} catch (ServiceUnavailableException e) {
