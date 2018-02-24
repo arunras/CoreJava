@@ -27,11 +27,14 @@ public class ReceiveMessage implements MessageListener {
         double price = mapMessage.getDouble("price");
         long longDate = mapMessage.getLong("date");
         Date date = new Date(longDate);
-
+        
+        System.out.println("Attempting redelivery number: " + mapMessage.getIntProperty("JMSXDeliveryCount"));
         System.out.println("Sale of " + title + " (" + sku + ") at $" + price + " on" + date);
         
         //simulate system crash
-        throw new NullPointerException();
+        if (Math.random() < 0.9) {
+        		throw new SystemUnavailableException();
+        }
 
       } catch (JMSException e) {
         throw new RuntimeException(e);
