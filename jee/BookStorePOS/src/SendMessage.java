@@ -1,8 +1,10 @@
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.MessageProducer;
@@ -34,14 +36,18 @@ public class SendMessage {
 			
 			Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
 			MessageProducer messageProducer = session.createProducer(queue);
-			
-      MapMessage message = session.createMapMessage();
-      message.setInt("sku", 10296);
-      message.setString("title", "Mastering Messaging");
-      message.setDouble("price", 10.99);
-      message.setLong("date", new Date().getTime());
-			
-			messageProducer.send(message);
+
+      Random random = new Random();
+		  for (int i = 0; i < 20; i++) {	
+        int priority = random.nextInt(9);
+        MapMessage message = session.createMapMessage();
+        message.setInt("sku", 10296);
+        message.setString("title", "Mastering Messaging with priority " + priority);
+        message.setDouble("price", 10.99);
+        message.setLong("date", new Date().getTime());
+        
+        messageProducer.send(message, DeliveryMode.PERSISTENT, priority, 10_000);
+      }
 			
 		} catch (NamingException e) {
 			e.printStackTrace();
