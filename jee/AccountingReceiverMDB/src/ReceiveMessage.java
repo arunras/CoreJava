@@ -29,7 +29,9 @@ public class ReceiveMessage implements MessageListener {
         Date date = new Date(longDate);
 
         System.out.println("Sale of " + title + " (" + sku + ") at $" + price + " on" + date);
-
+        
+        //simulate system crash
+        throw new NullPointerException();
 
       } catch (JMSException e) {
         throw new RuntimeException(e);

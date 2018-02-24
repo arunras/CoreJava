@@ -4,6 +4,7 @@ import java.util.Properties;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
+import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.Queue;
 import javax.jms.QueueBrowser;
@@ -30,7 +31,7 @@ public class Monitor
 		{
 			Context ctx = new InitialContext(jndiProperties);
 
-			Queue queue = (Queue)ctx.lookup("jms/ExpiryQueue");
+			Queue queue = (Queue)ctx.lookup("jms/DLQ");
 
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("jms/RemoteConnectionFactory");
 
@@ -51,6 +52,16 @@ public class Monitor
 			
 				while (e.hasMoreElements()) {
 					Message message = e.nextElement();
+					MapMessage mapMessage = (MapMessage) message;
+					Enumeration<String> names = mapMessage.getMapNames();
+					System.out.println("Message number: " + numMsgs);
+					while (names.hasMoreElements()) {
+						String name = names.nextElement();
+						Object value = mapMessage.getObject(name);
+						System.out.println(name + " : " + value);
+					}
+					
+					
 					numMsgs++;
 					
 				}
