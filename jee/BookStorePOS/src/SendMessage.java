@@ -11,6 +11,7 @@ import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.jms.Topic;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -30,12 +31,13 @@ public class SendMessage {
 		
 		try {
 			Context ctx = new InitialContext(jndiProperties);
-			Queue queue = (Queue)ctx.lookup("jms/BookStoreQueue");
+			//Queue queue = (Queue)ctx.lookup("jms/BookStoreQueue");
+      Topic topic = (Topic) ctx.lookup("jms/BookStoreTopic");
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("jms/RemoteConnectionFactory");
 			connection = cf.createConnection();
 			
 			Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
-			MessageProducer messageProducer = session.createProducer(queue);
+			MessageProducer messageProducer = session.createProducer(topic);
 
       Random random = new Random();
 		  for (int i = 0; i < 20; i++) {	
@@ -46,7 +48,7 @@ public class SendMessage {
         message.setDouble("price", 10.99);
         message.setLong("date", new Date().getTime());
         
-        messageProducer.send(message, DeliveryMode.PERSISTENT, priority, 10_000);
+        messageProducer.send(message, DeliveryMode.PERSISTENT, priority, 0);
       }
 			
 		} catch (NamingException e) {

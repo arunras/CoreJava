@@ -10,18 +10,20 @@ import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.jms.Topic;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+
 public class ReceiveMessage {
-  private static boolean lookForUserPressingX() {
-    Scanner scanner = new Scanner(System.in);
-    return scanner.nextLine().toLowerCase().equals("x");
-  }
+	
+	private static boolean lookForUserPressingX() {
+		Scanner scanner = new Scanner(System.in);
+		return scanner.nextLine().toLowerCase().equals("x");
+	}
 
 	public static void main(String[] args) {
-		
 		Properties jndiProperties = new Properties();
 		jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 		jndiProperties.put("jboss.naming.client.ejb.context","true");
@@ -32,20 +34,26 @@ public class ReceiveMessage {
 		
 		try {
 			Context ctx = new InitialContext(jndiProperties);
-			Queue queue = (Queue)ctx.lookup("jms/BookStoreQueue");
+			//Queue queue = (Queue)ctx.lookup("jms/BookStoreQueue");
+			Topic topic = (Topic) ctx.lookup("jms/BookStoreTopic");
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("jms/RemoteConnectionFactory");
 			connection = cf.createConnection();
-			
+			connection.setClientID("accounting1");
 			Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
-      MessageConsumer consumer = session.createConsumer(queue);
-      consumer.setMessageListener(new MapMessageListener());
-
-      connection.start();
-
-      boolean finished = false;
-      while (!finished) {
-        finished = lookForUserPressingX();
-      }
+			
+			//MessageConsumer consumer = session.createConsumer(topic);
+			MessageConsumer consumer = session.createDurableConsumer(topic, "accounting");
+			consumer.setMessageListener(new MapMessageListener());
+			
+			connection.start();
+			
+			boolean finished = false;
+			while (!finished) {
+				finished = lookForUserPressingX();
+			}
+			
+			
+			
 			
 		} catch (NamingException e) {
 			e.printStackTrace();
@@ -61,4 +69,5 @@ public class ReceiveMessage {
 		}
 
 	}
+
 }
