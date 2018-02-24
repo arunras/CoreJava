@@ -31,13 +31,13 @@ public class SendMessage {
 		
 		try {
 			Context ctx = new InitialContext(jndiProperties);
-			//Queue queue = (Queue)ctx.lookup("jms/BookStoreQueue");
-      Topic topic = (Topic) ctx.lookup("jms/BookStoreTopic");
+			Queue queue = (Queue)ctx.lookup("jms/BookStoreQueue");
+      //Topic topic = (Topic) ctx.lookup("jms/BookStoreTopic");
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("jms/RemoteConnectionFactory");
 			connection = cf.createConnection();
 			
-			Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
-			MessageProducer messageProducer = session.createProducer(topic);
+			Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+			MessageProducer messageProducer = session.createProducer(queue);
 
       Random random = new Random();
 		  for (int i = 0; i < 20; i++) {	
@@ -49,6 +49,14 @@ public class SendMessage {
         message.setLong("date", new Date().getTime());
         
         messageProducer.send(message, DeliveryMode.PERSISTENT, priority, 0);
+      }
+
+      try {
+      session.commit();
+      } catch (Exception e) {
+        session.rollback();
+        System.out.println("Something went wrong!");
+        System.out.println(e);
       }
 			
 		} catch (NamingException e) {

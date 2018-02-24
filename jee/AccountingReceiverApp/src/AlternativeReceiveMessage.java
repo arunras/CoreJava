@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -37,15 +39,19 @@ public class AlternativeReceiveMessage {
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("jms/RemoteConnectionFactory");
 			connection = cf.createConnection();
 			
-			Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
+			Session session = connection.createSession(true,Session.SESSION_TRANSACTED);
 
       MessageConsumer consumer = session.createConsumer(queue);
 
       connection.start();
 
-      MapMessage mapMessage = (MapMessage) consumer.receive(100);
-      
-      if (mapMessage != null) {
+      List<MapMessage> messages = new ArrayList<>();
+      while (messages.size() < 100) {
+        MapMessage mapMessage = (MapMessage) consumer.receive(100);
+        if (mapMessage != null) messages.add(mapMessage);
+      }
+
+      for (MapMessage mapMessage : messages) {
         String title = mapMessage.getString("title");
         int sku = mapMessage.getInt("sku");
         double price = mapMessage.getDouble("price");
@@ -53,9 +59,9 @@ public class AlternativeReceiveMessage {
         Date date = new Date(longDate);
 
         System.out.println("Sale of " + title + " (" + sku + ") at $" + price + " on" + date);
-      } else {
-        System.out.println("There were no messages");
       }
+      
+      session.commit();
 			
 		} catch (NamingException e) {
 			e.printStackTrace();
