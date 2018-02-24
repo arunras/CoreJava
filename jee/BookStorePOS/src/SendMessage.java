@@ -31,13 +31,13 @@ public class SendMessage {
 		
 		try {
 			Context ctx = new InitialContext(jndiProperties);
-			Queue queue = (Queue)ctx.lookup("jms/BookStoreQueue");
-      //Topic topic = (Topic) ctx.lookup("jms/BookStoreTopic");
+			//Queue queue = (Queue)ctx.lookup("jms/BookStoreQueue");
+			Topic topic = (Topic) ctx.lookup("jms/BookStoreTopic");
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("jms/RemoteConnectionFactory");
 			connection = cf.createConnection();
 			
 			Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-			MessageProducer messageProducer = session.createProducer(queue);
+			MessageProducer messageProducer = session.createProducer(topic);
 
       Random random = new Random();
 		  for (int i = 0; i < 20; i++) {	
