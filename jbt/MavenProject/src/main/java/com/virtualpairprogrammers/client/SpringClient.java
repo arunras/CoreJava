@@ -20,6 +20,8 @@ public class SpringClient
 	{
 		AbstractApplicationContext factory = new ClassPathXmlApplicationContext("application.xml");		
 		BookService books = (BookService)factory.getBean("bookService");
+
+		System.out.println("Hello!");
 		
 		// recommended books for this course!
 		books.registerNewBook(new Book("1933988134", "Spring in Action", "Craig Walls", 23.99));

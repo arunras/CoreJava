@@ -15,7 +15,7 @@
   <version>1.0-SNAPSHOT</version>
   
   <!--  How are we packaging - jar, war, ear -->
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <!--  This is optional, used for any local names for the project. Can be "softer" than the artifactId -->
   <name>Hartley's Bookstore</name>
@@ -25,62 +25,97 @@
   
   
   
+  <!-- Plugin Configurations -->
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-      
-        <configuration>
-          <verbose>false</verbose>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
+  	<plugins>
+  	
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-war-plugin</artifactId>
+  			<version>2.4</version>
+  			
+  			<configuration>
+  				<outputDirectory>/usr/local/opt/tomcat/libexec/webapps</outputDirectory>
+  				<warName>mymavenwebapp</warName>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.1.0</version>
+			    <webResources>
+			    	<resource>
+			    		<directory>${basedir}/src/main/resources</directory>
+			    		<targetPath>WEB-INF</targetPath>
+			    		<includes>
+			    			<include>**/application.xml</include>
+			    			<include>**/*.properties</include>
+			    		</includes>
+			    	</resource>			    	
+			    </webResources>
 
-        <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-          <archive>
-            <manifest>
-              <mainClass>
-                com.virtualpairprogrammers.client.SpringClient
-              </mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.0.2</version>
-
-        <executions>
-          <execution>
-            <id>default-jar</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
+  			</configuration>
+  		
+  		</plugin>
+  	
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-compiler-plugin</artifactId>
+  			<version>3.1</version>
+  			
+  			<configuration>
+  				<verbose>false</verbose>
+  				<source>1.6</source>
+  				<target>1.6</target>
+  			</configuration>
+  		</plugin>
+  		
+  		<!--  This is the configuration for the JAR plugins used earlier in the course.
+  		      Not needed to generate WAR files
+  		      
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-assembly-plugin</artifactId>
+  			<version>2.4</version>
+  			
+  			<configuration>
+  	            <descriptorRefs>
+                   <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+  			
+  				<archive>
+  					<manifest>
+  						<mainClass>
+  							com.virtualpairprogrammers.client.SpringClient
+  						</mainClass>
+  					</manifest>
+  				</archive>
+  			</configuration>
+  			
+  			<executions>
+  				<execution>
+  					<phase>package</phase>
+  					<goals>
+  						<goal>single</goal>
+  					</goals>
+  				</execution>
+  			</executions>  		
+  			
+  		</plugin>
+  		
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-jar-plugin</artifactId>
+  			<version>2.4</version>
+  			
+  			<executions>
+  				<execution>
+  				    <id>default-jar</id>
+  					<phase>none</phase>
+  				</execution>
+  			</executions>
+  			
+  		</plugin>
+  		-->
+  		
+  	</plugins> 
   </build>
+  
   
   <!--  And now, a list of Maven projects that we depend upon -->
   <dependencies>
@@ -92,9 +127,9 @@
     </dependency>
     
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
-      <version>[3.0.3, 4.0.0)</version>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-webmvc</artifactId>
+	  <version>[3.0.3, 4.0.0)</version>
     </dependency>
     
     <!-- although SpringMVC declares validation as a dependency, it is set to 
@@ -133,7 +168,7 @@
 	   <groupId>org.springframework.webflow</groupId>
 	   <artifactId>spring-webflow</artifactId>
 	   <version>2.3.2.RELEASE</version>
-  	 <scope>runtime</scope>	   
+  	   <scope>runtime</scope>	   
     </dependency>
                     
 	<dependency>
